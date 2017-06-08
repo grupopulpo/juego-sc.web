@@ -51,6 +51,16 @@ module GameApp.Models {
 			"SugarCookie"
 		]
 
+		//sterben
+		spriteNames2: Array<string> = [
+			"Pan",
+			"Cupcake",
+			"Caramelo azul",
+			"Donut",
+			"Dulce verde",
+			"Estrella"
+		]
+
 	    highlightedSpriteNames: Array<string> = [
 			"Croissant-Highlighted",
 			"Cupcake-Highlighted",
@@ -64,6 +74,12 @@ module GameApp.Models {
 		spriteName(): string {
 			return this.spriteNames[this.cookieType - 1];
 		}
+
+		//sterben
+		spriteName2(): string {
+			return this.spriteNames2[this.cookieType - 1];
+		}
+
 		highlightedSpriteName() {
          return this.highlightedSpriteNames[this.cookieType - 1];
 		}

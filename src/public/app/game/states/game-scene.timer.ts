@@ -8,6 +8,8 @@ module GameApp.States{
       timer: Phaser.Timer;
       timerEvent: Phaser.TimerEvent;
       timerText: Phaser.Text;
+
+      GameScene: GameScene;
 		
 		constructor(game: Phaser.Game) {
 			this.game = game;
@@ -15,16 +17,20 @@ module GameApp.States{
 		
 		renderTimer() {
          if(this.timer.running){
-            this.timerText.text = this.formatTime(Math.round((this.timerEvent.delay - this.timer.ms) / 1000))
+            this.timerText.text = this.formatTime(Math.round((this.timerEvent.delay + this.timer.ms) / 1000));
          }
          else{
-            this.timerText.text = "Done";
+             if(this.timerText.text != "Game over"){ //sterben
+                  this.timerText.text = "Hecho";
+             }
+               
          }
       }
       
       createTimer() {
          
-         var timerlabel = this.game.add.text(32, 20, "Time:", {
+         //var timerlabel = this.game.add.text(32, 20, "time:", { //sterben
+         var timerlabel = this.game.add.text(32, 20, "Tiempo:", {
             font: "Gill Sans Bold",
             fill: "white",
             align: "center",
@@ -41,7 +47,9 @@ module GameApp.States{
          this.timerText.setShadow(-1, 1, 'rgba(0,0,0,0.5)', 0);
          
          this.timer = this.game.time.create();
-         this.timerEvent = this.timer.add(Phaser.Timer.MINUTE * 0 + Phaser.Timer.SECOND * 30, this.endTimer, this);
+         this.timerEvent = this.timer.add(Phaser.Timer.MINUTE*0 + Phaser.Timer.SECOND*10,  this.endTimer, this);
+         //this.timerEvent = this.timer.add(10000, this.endTimer, this);
+         //this.timerEvent = this.timer.repeat(Phaser.Timer.MINUTE * 0 + Phaser.Timer.SECOND * 1, Phaser.Timer.MINUTE * 0 +  Phaser.Timer.SECOND*10, this.endTimer, this);
          this.timer.start();
       }
       
@@ -49,7 +57,8 @@ module GameApp.States{
          this.timer.stop();
          
          var levelNumber = parseInt(this.game.state.states['GameScene'].levelNumber);
-         if(levelNumber <= 2){
+         console.log('levelNumber: '+levelNumber);
+         if(levelNumber <= 4){
              levelNumber = levelNumber+1;
              
              

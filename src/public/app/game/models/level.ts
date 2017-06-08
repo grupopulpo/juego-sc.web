@@ -289,6 +289,8 @@ module GameApp.Models {
 									var swap = new Swap();
 									swap.cookieA = cookie;
 									swap.cookieB = other;
+									//console.log('cookieA: '+ cookie.spriteName2()); //sterben
+									//console.log('cookieB: '+ other); //sterben
 									possibleSwaps.push(swap);
 								}
  
@@ -372,7 +374,8 @@ module GameApp.Models {
 								column += 1;
 							}
 							while (column < this.config.numColumns && this.cookies[column][row] && this.cookies[column][row].cookieType == matchType);
-
+							console.log('Type Cookie: ' + this.cookies[column][row].cookieType); //sterben
+							console.log('Type Cookie: ' + this.cookies[column][row].spriteName2()); //sterben
 							set.push(chain);
 
 							continue;

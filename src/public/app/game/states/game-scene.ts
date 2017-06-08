@@ -9,6 +9,33 @@ import Cookie = GameObjects.Cookie;
 import Chain = GameObjects.Chain;
 import GameConfig = GameObjects.Config;
 
+/*croissant = 1,
+cupcake = 2,
+danish = 3,
+donut = 4,
+macaroon = 5,
+sugarCookie = 6*/
+
+var  countCroissant = 0;
+var flagCroissant = 0;
+
+var countCupcake = 0;
+var flagCupcake = 0;
+
+var countDanish = 0;
+var flagDanish = 0;
+
+var countDonut = 0;
+var flagDonut = 0;
+
+var countMacaroon = 0;
+var flagMacaroon = 0;
+
+var countSugarCookie = 0;
+var flagSugarCookie = 0;
+
+
+
 module GameApp.States {
    'use strict';
 
@@ -48,14 +75,14 @@ module GameApp.States {
          var bg = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'bg');
          bg.anchor.setTo(0.5, 0.5);
 
-         this.game.sound.play('bgMusic');
+         this.game.sound.stopAll(); //sterben
+         //this.game.sound.play('bgMusic');
          
          this.createLevelText(levelNumber + 1);
          
          this.initScore();
          this.createScoreText();
          
-
          this.swapSound = this.game.add.audio('swapSound');
          this.invalidSwapSound = this.game.add.audio('invalidSwapSound');
          this.matchSound = this.game.add.audio('matchSound');
@@ -104,7 +131,8 @@ module GameApp.States {
       private createScoreText(){
          this.scoreLabel = this.game.add.text(this.game.world.centerX, 20 , "Score:" , {
             font: "Gill Sans Bold",
-            fill: "white",
+            //fill: "white",  //sterben
+            fill: "red",
             fontSize: 20
          });
          this.scoreLabel.setShadow(-1, 1, 'rgba(0,0,0,0.5)', 0);
@@ -218,15 +246,16 @@ module GameApp.States {
          
          if(convert){
             var cookie = this.level.cookieAtPosition(cookiePosition.column, cookiePosition.row);
-            if(cookie){
+            /*if(cookie){
                console.log('actual cookie', {
                column: cookie.column,
                row: cookie.row
             })
-            }
+            }*/
             
          }
-        console.log('x-'+x+' y-'+y);
+        //console.log('movimientox2');
+        //console.log('x-'+x+' y-'+y);
          //console.log('cookie point', cookiePosition);
       }
       touchesMoved(pointer: Phaser.Pointer, x, y, fromClick) {
@@ -269,7 +298,6 @@ module GameApp.States {
       }
 
       touchesBegan(selectedCookie: Phaser.Sprite, pointer: Phaser.Pointer) {
-
          var cookiePosition: GameObjects.ICookiePosition = {
             column: null,
             row: null
@@ -296,7 +324,7 @@ module GameApp.States {
          //console.log('up from', selectedGem);
          //console.log('touchesEnd pointer', pointer.position);
          
-         if(this.isPossibleSwap){
+         if(this.isPossibleSwap){ 
             this.handleMatches();
          }
          
@@ -305,6 +333,7 @@ module GameApp.States {
       }
       
       trySwapHorizontal(horzDelta: number, vertDelta: number) {
+            console.log('trySwapHorizontal'); //sterben
 
          this.userInteractionEnabled = false;
 
@@ -342,6 +371,8 @@ module GameApp.States {
 
       handleMatches() {
          var chains = this.level.removeMatches();
+         console.log('handleMatches-removeMatches'); //sterben
+         
          if(chains.length == 0){
             this.beginNextTurn();
             return;
@@ -410,17 +441,85 @@ module GameApp.States {
       animateMatchedCookies(chains: Chain[]) {
 
          chains.forEach((chain) => {
-            
             this.animateScoreForChain(chain);
-            
+            flagCroissant = 0;
+            flagCupcake = 0;
+            flagDanish = 0;
+            flagDonut = 0;
+            flagMacaroon = 0;
+            flagSugarCookie = 0;
             chain.cookies.forEach((cookie) => {
-               // 1
+               // 1        
                if (cookie.sprite != null) {
  
                   // 2
                   cookie.sprite.kill();
                   this.matchSound.play();
-                  
+                  console.log('spriteName: '+cookie.cookieType+' '+cookie.spriteName()); //sterben
+                  //Conteo de cookies explotadas
+                  /*croissant = 1,
+                  cupcake = 2,
+                  danish = 3,
+                  donut = 4,
+                  macaroon = 5,
+                  sugarCookie = 6*/
+                  if(cookie.cookieType == 1){
+                     if(flagCroissant == 0){
+                        countCroissant = countCroissant+1;
+                        console.log('countCroissant: '+countCroissant); //sterben2
+                        flagCroissant = 1;
+                     }
+                  }
+
+                  if(cookie.cookieType == 2){
+                     if(flagCupcake == 0){
+                        countCupcake = countCupcake+1;
+                        console.log('countCupcake: '+countCupcake); //sterben2
+                        flagCupcake = 1;
+                        if(countCupcake == 2){
+                              countCroissant = 0;
+                              countCupcake = 0;
+                              countDanish = 0;
+                              countDonut = 0;
+                              countMacaroon = 0;
+                              countSugarCookie = 0;
+                              this.gameTimer.endTimer();
+                              return;
+                        }
+                     }
+                  }
+
+                  if(cookie.cookieType == 3){
+                     if(flagDanish == 0){
+                        countDanish = countDanish+1;
+                        console.log('countDanish: '+countDanish); //sterben2
+                        flagDanish = 1;
+                     }
+                  }
+
+                  if(cookie.cookieType == 4){
+                     if(flagDonut == 0){
+                        countDonut = countDonut+1;
+                        console.log('countDonut: '+countDonut); //sterben2
+                        flagDonut = 1;
+                     }
+                  }
+
+                  if(cookie.cookieType == 5){
+                     if(flagMacaroon == 0){
+                        countMacaroon = countMacaroon+1;
+                        console.log('countMacaroon: '+countMacaroon); //sterben2
+                        flagMacaroon = 1;
+                     }
+                  }
+
+                  if(cookie.cookieType == 6){
+                     if(flagSugarCookie == 0){
+                        countSugarCookie = countSugarCookie+1;
+                        console.log('countSugarCookie: '+countSugarCookie); //sterben2
+                        flagSugarCookie = 1;
+                     }
+                  }
  
                   // 3
                   cookie.sprite = null;
@@ -474,6 +573,8 @@ module GameApp.States {
             
             cookies.forEach((cookie: Cookie) => {
                idx++;
+
+               console.log('spriteNameNews:'+cookie.spriteName()); //sterben
                
                var point = this.pointForCookie(cookie.column, startRow);
                var createdCookie: Phaser.Sprite = this.cookieLayer.create(point.x, point.y, cookie.spriteName());
