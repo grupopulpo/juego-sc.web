@@ -164,7 +164,8 @@ function postBuild(params) {
       './src/**/*.css',
       './src/**/*.vash',
       './src/**/*.wav',
-      './src/**/*.mp3'
+      './src/**/*.mp3',
+      './src/**/*.html'
    ];
 
    return gulp.src(files)
