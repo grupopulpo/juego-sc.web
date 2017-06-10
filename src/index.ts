@@ -12,7 +12,7 @@ app.use('/',express.static(__dirname + '/public/app'));
 // });
 
 app.listen(3000, function() {
-  console.log('Node app is running on port', 3000);
+  console.log('Node app is running on port', 80);
 });
 
 
