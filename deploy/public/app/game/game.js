@@ -566,7 +566,7 @@ var GameApp;
                 this.game.load.json('level3', assets + 'levels/Level_3.json');
                 this.game.load.json('level4', assets + 'levels/Level_4.json');
                 this.game.load.json('level5', assets + 'levels/Level_5.json');
-                this.game.load.json('level6', assets + 'levels/Level_6.json');
+                this.game.load.json('level6', assets + 'levels/Level_6.json'); //sterben
                 this.game.load.audio('swapSound', assets + 'sounds/Chomp.wav');
                 this.game.load.audio('invalidSwapSound', assets + 'sounds/Error.wav');
                 this.game.load.audio('matchSound', assets + 'sounds/Ka-Ching.wav');
