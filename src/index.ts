@@ -5,7 +5,11 @@ var app = express();
 
 app.use(express.static(__dirname + '/public'));
 
-app.use('/',express.static(__dirname + '/public/app'));
+app.post('/', function(req, res) {
+    res.sendFile(__dirname + '/public/app/index.html');
+});
+
+//app.use('/',express.static(__dirname + '/public/app'));
 
 // app.get('/', function(req, res){
 //   res.send('Hello World');
