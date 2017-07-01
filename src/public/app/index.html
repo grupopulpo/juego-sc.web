@@ -43,7 +43,6 @@
                     testAPI();
                 }
             }, { scope: 'email' });
-            testAPI();
           } else {
             console.log('Debes loguearte para jugar');
             FB.login(function(response){
@@ -58,7 +57,7 @@
         function checkLoginState() {
           FB.getLoginStatus(function(response) {
             statusChangeCallback(response);
-          });
+          }, { scope: 'email' });
         };
 
         window.fbAsyncInit = function() {
