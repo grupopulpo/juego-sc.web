@@ -29,28 +29,34 @@
       // Autenticacion con facebook
       var appId = '490131724696268';
 
-      console.log("Bienvenido a mi juego");
+        // function statusChangeCallback(response) {
+        //   console.log(response);
 
-
+        //   if (response.status === 'connected') {
+        //     console.log('Perfecto estas logueado');
+        //     FB.login(function(response){
+        //         if (response.status === 'connected') {
+        //             testAPI();
+        //         }
+        //     }, { scope: 'id,name,email' });
+        //   } else {
+        //     console.log('Debes loguearte para jugar');
+        //     FB.login(function(response){
+        //         if (response.status === 'connected') {
+        //             console.log('Perfecto estas logueado');
+        //             testAPI();
+        //         }
+        //     }, { scope: 'id,name,email' });
+        //   }
+        // };
         function statusChangeCallback(response) {
           console.log(response);
-
           if (response.status === 'connected') {
             console.log('Perfecto estas logueado');
-            FB.login(function(response){
-                if (response.status === 'connected') {
-                    console.log('Perfecto estas logueado - email');
-                    testAPI();
-                }
-            }, { scope: 'email' });
+            testAPI();
           } else {
             console.log('Debes loguearte para jugar');
-            FB.login(function(response){
-                if (response.status === 'connected') {
-                    console.log('Perfecto estas logueado');
-                    testAPI();
-                }
-            }, { scope: 'email' });
+            testAPI();
           }
         };
 
@@ -85,12 +91,25 @@
         }(document, 'script', 'facebook-jssdk'));
 
         function testAPI() {
-          console.log('Welcome!  Fetching your information.... ');
-          FB.api('/me?fields=id,name,email', function(response) {
-            console.log('RESPONSE: '+ JSON.stringify(response));
-            console.log('Successful login for: ' + response.name);
-            console.log('Successful login for: ' + response.email);
-          });
+          FB.login(
+            function(response) {
+                if (response.status === 'connected') {
+                  console.log('Welcome!  Fetching your information.... ');
+                  FB.api('/me?fields=id,name,email', function(response) {
+                      console.log('Successful login username: ' + response.name + '.');
+                      console.log('Successful login email: ' + response.email + '.');
+                  });
+                } else {
+                    console.log('User cancelled login or did not fully authorize.');
+                }
+            }, {scope:'email'}
+          );
+          // console.log('Welcome!  Fetching your information.... ');
+          // FB.api('/me?fields=id,name,email', function(response) {
+          //   console.log('RESPONSE: '+ JSON.stringify(response));
+          //   console.log('Successful login for: ' + response.name);
+          //   console.log('Successful login for: ' + response.email);
+          // });
         };
 
         checkLoginState();
