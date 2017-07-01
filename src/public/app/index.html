@@ -90,6 +90,7 @@
           FB.api('/me', function(response) {
             console.log('RESPONSE: '+ JSON.stringify(response));
             console.log('Successful login for: ' + response.name);
+            console.log('Successful login for: ' + response.email);
           });
         };
 
