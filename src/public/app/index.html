@@ -37,6 +37,12 @@
 
           if (response.status === 'connected') {
             console.log('Perfecto estas logueado');
+            FB.login(function(response){
+                if (response.status === 'connected') {
+                    console.log('Perfecto estas logueado - email');
+                    testAPI();
+                }
+            }, { scope: 'email' });
             testAPI();
           } else {
             console.log('Debes loguearte para jugar');
